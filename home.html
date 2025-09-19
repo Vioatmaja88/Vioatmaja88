@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pak Lamin Bakery — Fresh Green</title>
+  <style>
+    /* ---------- Fonts & Base ---------- */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    :root{
+      --green-1:#e8f9f0;
+      --green-2:#b7f0d2;
+      --green-3:#3fbf88; /* accent */
+      --green-4:#2e8b57; /* dark accent */
+      --muted:#6b6b6b;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.6);
+      --shadow: 0 6px 20px rgba(46,139,87,0.12);
+      --success:#28a745;
+    }
+    [data-theme="dark"]{
+      --card:#1f1f1f;
+      --glass: rgba(255,255,255,0.03);
+      --muted:#bdbdbd;
+      --green-1:#0f1412;
+      --green-2:#163826;
+      --green-3:#3fbf88;
+      --green-4:#1f6b43;
+      --shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',sans-serif;
+      margin:0;
+      background: linear-gradient(180deg,var(--green-1),#fff 120px);
+      color:#122;
+      transition:background 0.35s,color 0.35s;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ---------- Layout ---------- */
+    .container{max-width:1200px;margin:0 auto;padding:20px}
+    header{
+      position:fixed;left:0;right:0;top:0;z-index:999;
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+      backdrop-filter: blur(6px);
+      box-shadow:var(--shadow);
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+    }
+    [data-theme="dark"] header{background: linear-gradient(90deg, rgba(20,20,20,0.6), rgba(20,20,20,0.4));}
+
+    .header-inner{max-width:1200px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+    .logo-circle{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--green-3),var(--green-4));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;box-shadow:0 4px 16px rgba(46,139,87,0.28)}
+    .brand h1{font-size:18px;margin:0}
+    .nav{display:flex;gap:18px;align-items:center}
+    .nav a{color:inherit;text-decoration:none;font-weight:600;padding:8px 10px;border-radius:8px;opacity:0.95}
+    .nav a:hover{background:var(--glass);transform:translateY(-2px)}
+    .actions{display:flex;gap:8px;align-items:center}
+
+    /* controls */
+    .control{
+      display:flex;align-items:center;gap:8px;background:var(--card);padding:8px;border-radius:10px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.03)
+    }
+    [data-theme="dark"] .control{border-color: rgba(255,255,255,0.03)}
+    .icon-btn{cursor:pointer;border:none;background:transparent;font-size:18px;padding:6px;border-radius:8px}
+    .icon-btn:hover{transform:translateY(-2px)}
+
+    /* promo */
+    .promo{
+      margin-top:72px;
+      display:flex;align-items:center;justify-content:center;padding:12px 20px;background:linear-gradient(90deg,#e8fff2,#dffff0);
+      color:var(--green-4);font-weight:600;border-radius:10px;margin-bottom:18px;box-shadow:var(--shadow);max-width:1200px;margin-left:auto;margin-right:auto;
+    }
+    [data-theme="dark"] .promo{background:linear-gradient(90deg,#0b2418,#082214);color:var(--green-2)}
+
+    /* main layout */
+    main{max-width:1200px;margin:0 auto;padding:20px}
+    .top-controls{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+    .search{
+      flex:1;display:flex;gap:8px;align-items:center;background:var(--card);padding:10px;border-radius:12px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.03)
+    }
+    .search input{border:0;outline:0;padding:8px;font-size:15px;background:transparent;flex:1}
+    .filters{display:flex;gap:10px;align-items:center}
+    .select, .btn {padding:8px 12px;border-radius:10px;border:0;background:var(--card);box-shadow:var(--shadow);cursor:pointer}
+    .select{display:inline-flex;align-items:center;gap:8px}
+    .btn.primary{background:linear-gradient(90deg,var(--green-3),var(--green-4));color:#fff;border-radius:10px}
+    .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06)}
+
+    /* product grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+    .card{
+      background:var(--card);border-radius:14px;padding:14px;box-shadow:var(--shadow);overflow:hidden;position:relative;transition:transform .28s,box-shadow .28s;
+      display:flex;flex-direction:column;gap:10px;border:1px solid rgba(0,0,0,0.03)
+    }
+    [data-theme="dark"] .card{border-color: rgba(255,255,255,0.03)}
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(46,139,87,0.14)}
+    .card img{width:100%;height:150px;object-fit:cover;border-radius:10px}
+    .card h3{margin:0;font-size:18px;color:var(--green-4)}
+    .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+    .card .actions-row{display:flex;gap:8px;align-items:center;margin-top:auto}
+    .price{font-weight:700;color:var(--green-4)}
+    .pill{background:linear-gradient(90deg,#f0fff6,#e6ffef);padding:6px 8px;border-radius:8px;font-weight:600;color:var(--green-4);font-size:13px}
+    [data-theme="dark"] .pill{background:rgba(255,255,255,0.02);}
+
+    /* wishlist badge */
+    .heart{font-size:18px;cursor:pointer}
+    .heart.active{color:crimson;transform:scale(1.05)}
+
+    /* sidebar cart */
+    .cart-sidebar{
+      position:fixed;right:-420px;top:0;height:100vh;width:420px;background:var(--card);box-shadow: -20px 0 60px rgba(0,0,0,0.15);padding:18px;transition:right .4s;z-index:1200;display:flex;flex-direction:column
+    }
+    [data-theme="dark"] .cart-sidebar{background:var(--card)}
+    .cart-sidebar.open{right:0}
+    .cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .cart-list{flex:1;overflow:auto;padding-right:6px}
+    .cart-item{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.05)}
+    .cart-item img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+    .cart-item .name{font-weight:600}
+    .qty-controls{display:flex;gap:6px;align-items:center}
+    .small{font-size:13px;color:var(--muted)}
+    .cart-footer{padding-top:12px;border-top:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:8px}
+
+    /* profile modal, admin modal, checkout modal */
+    .modal-backdrop{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+    .modal{background:var(--card);padding:18px;border-radius:12px;min-width:320px;max-width:920px;box-shadow:var(--shadow)}
+    .modal.show{display:flex}
+    .modal .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+    /* admin panel */
+    .admin-panel{display:flex;gap:12px;align-items:flex-start;flex-direction:column}
+    .admin-top{display:flex;gap:8px;align-items:center}
+    .form-row{display:flex;flex-direction:column;gap:6px}
+    input[type="text"], input[type="number"], textarea, select{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);outline:none}
+    [data-theme="dark"] input[type="text"], [data-theme="dark"] textarea {background:transparent;border-color: rgba(255,255,255,0.03);color:inherit}
+    textarea{min-height:80px;resize:vertical}
+    .btn.danger{background:crimson;color:#fff}
+    .small-muted{font-size:13px;color:var(--muted)}
+
+    /* profile avatar */
+    .avatar{width:64px;height:64px;border-radius:12px;object-fit:cover;box-shadow:var(--shadow)}
+
+    /* responsive */
+    @media (max-width:900px){
+      .header-inner{padding:12px}
+      .cart-sidebar{width:100%;right:-100%}
+      .cart-sidebar.open{right:0}
+      .modal{width:92%}
+    }
+
+    /* micro animations */
+    .fade-in{animation:fadeIn .6s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    /* tiny helpers */
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+    .mb-8{margin-bottom:8px}
+  </style>
+</head>
+<body data-theme="light">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="brand" onclick="scrollToTop()">
+        <div class="logo-circle">PL</div>
+        <div>
+          <h1>Pak Lamin Bakery</h1>
+          <div class="small-muted" style="font-size:12px">Fresh & Homemade</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#" onclick="scrollToSection('home')">Home</a>
+        <a href="#" onclick="scrollToSection('products')">Products</a>
+        <a href="#" onclick="openProfile()">Profile</a>
+        <a href="#" onclick="openAdmin()">Admin</a>
+      </nav>
+
+      <div class="actions">
+        <div class="control" title="Search">
+          <div style="font-size:16px">🔍</div>
+          <input id="miniSearch" placeholder="Search product..." style="border:0;background:transparent;outline:none" />
+        </div>
+
+        <div class="control" title="Language">
+          <select id="langToggle" style="background:transparent;border:0;outline:none;font-weight:600">
+            <option value="id">ID</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+
+        <div class="control" title="Theme">
+          <button id="themeToggle" class="icon-btn" aria-label="toggle theme">🌞</button>
+        </div>
+
+        <div class="control" title="Wishlist">
+          <button id="wishlistBtn" class="icon-btn">♡ <span id="wishCount" style="font-size:13px;margin-left:6px"></span></button>
+        </div>
+
+        <div class="control" title="Cart">
+          <button id="openCart" class="icon-btn">🛒 <span id="cartCount" style="font-size:13px;margin-left:6px"></span></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROMO -->
+  <div class="promo">
+    <div id="promoText">Promo: Diskon 15% untuk pembelian pertama — gunakan kode <strong>PAKLAMIN15</strong></div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="container" id="home">
+    <!-- search & filters -->
+    <div class="top-controls">
+      <div class="search">
+        <div style="font-size:16px">🔍</div>
+        <input id="searchInput" placeholder="Cari roti, kue, pastry..." />
+        <div style="width:1px;height:28px;background:rgba(0,0,0,0.04)"></div>
+        <div class="filters">
+          <div>
+            <select id="categoryFilter" class="select">
+              <option value="all">Semua Kategori</option>
+              <option value="bread">Bread</option>
+              <option value="cake">Cake</option>
+              <option value="pastry">Pastry</option>
+              <option value="cookie">Cookie</option>
+            </select>
+          </div>
+          <div>
+            <select id="sortSelect" class="select">
+              <option value="popular">Terpopuler</option>
+              <option value="newest">Terbaru</option>
+              <option value="priceAsc">Termurah</option>
+              <option value="priceDesc">Termahal</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <button class="btn primary" onclick="openAdmin()">Admin</button>
+        <button class="btn" onclick="openProfile()">Profile</button>
+      </div>
+    </div>
+
+    <!-- product grid -->
+    <section id="products">
+      <h2 style="margin-bottom:14px">Our Products</h2>
+      <div id="productGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <!-- CART SIDEBAR -->
+  <aside id="cartSidebar" class="cart-sidebar" aria-hidden="true">
+    <div class="cart-header">
+      <div><strong>Your Cart</strong><div class="small-muted">Items you want to buy</div></div>
+      <div><button class="icon-btn" onclick="closeCart()">✖</button></div>
+    </div>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-footer">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="small-muted">Subtotal</div>
+        <div style="font-weight:800">Rp <span id="cartTotal">0</span></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" onclick="clearCart()">Clear</button>
+        <button class="btn primary" onclick="openCheckout()">Checkout</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MODALS -->
+  <div id="modalBackdrop" class="modal-backdrop" onclick="closeModal(event)">
+    <!-- profile modal -->
+    <div id="profileModal" class="modal" style="display:none;max-width:520px" onclick="event.stopPropagation()">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3 id="profileTitle">Profile</h3>
+        <button class="icon-btn" onclick="closeAllModals()">✖</button>
+      </div>
+      <div id="profileContent">
+        <!-- will be filled via JS -->
+      </div>
+    </div>
+
+    <!-- checkout modal -->
+    <div id="checkoutModal" class="modal" style="display:none;min-width:360px" onclick="event.stopPropagation()">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3>Checkout</h3>
+        <button class="icon-btn" onclick="closeAllModals()">✖</button>
+      </div>
+      <div id="checkoutContent">
+        <!-- form via JS -->
+      </div>
+    </div>
+
+    <!-- admin modal -->
+    <div id="adminModal" class="modal" style="display:none;min-width:720px" onclick="event.stopPropagation()">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3>Admin Panel</h3>
+        <button class="icon-btn" onclick="closeAllModals()">✖</button>
+      </div>
+      <div id="adminContent">
+        <!-- admin UI via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    /***********************
+     * Data keys & helpers *
+     ***********************/
+    const LS_KEYS = {
+      PRODUCTS: 'pl_products_v1',
+      CART: 'pl_cart_v1',
+      WISHLIST: 'pl_wishlist_v1',
+      PROFILE: 'pl_profile_v1',
+      LOCALE: 'pl_locale_v1',
+      THEME: 'pl_theme_v1',
+      ORDERS: 'pl_orders_v1'
+    };
+
+    // Default data (5 dummy products)
+    const defaultProducts = [
+      {
+        id: genId(),
+        title: 'Rustic Baguette',
+        category: 'bread',
+        price: 20000,
+        img: 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+        desc: 'Crispy outside, soft inside. Classic french-style baguette.',
+        createdAt: Date.now()-1000*60*60*24*5,
+        popularity: 120
+      },
+      {
+        id: genId(),
+        title: 'Chocolate Fudge Cake',
+        category: 'cake',
+        price: 45000,
+        img: 'https://patisserienewyork.com.au/wp-content/uploads/2020/12/cache_428_428_3_0_100_16777215_tall-american-wedge.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+        desc: 'Decadent rich chocolate cake with ganache.',
+        createdAt: Date.now()-1000*60*60*24*2,
+        popularity: 210
+      },
+      {
+        id: genId(),
+        title: 'Butter Croissant',
+        category: 'pastry',
+        price: 15000,
+        img: 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+        desc: 'Flaky, buttery pastry perfect for breakfast.',
+        createdAt: Date.now()-1000*60*60*24*8,
+        popularity: 180
+      },
+      {
+        id: genId(),
+        title: 'Choco Chip Cookies',
+        category: 'cookie',
+        price: 25000,
+        img: 'https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+        desc: 'Chewy cookies loaded with chocolate chips.',
+        createdAt: Date.now()-1000*60*60*24*1,
+        popularity: 300
+      },
+      {
+        id: genId(),
+        title: 'Matcha Roll Cake',
+        category: 'cake',
+        price: 38000,
+        img: 'https://images.pexels.com/photos/302800/pexels-photo-302800.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+        desc: 'Soft roll cake infused with premium matcha.',
+        createdAt: Date.now()-1000*60*60*24*3,
+        popularity: 95
+      }
+    ];
+
+    function genId(){ return 'p_'+Math.random().toString(36).slice(2,9) }
+
+    function saveLS(key, val){ localStorage.setItem(key, JSON.stringify(val)) }
+    function loadLS(key, fallback=null){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):fallback }catch(e){return fallback} }
+
+    // initialize products
+    if(!loadLS(LS_KEYS.PRODUCTS)){
+      saveLS(LS_KEYS.PRODUCTS, defaultProducts);
+    }
+
+    // init other storages
+    if(!loadLS(LS_KEYS.CART)) saveLS(LS_KEYS.CART, []);
+    if(!loadLS(LS_KEYS.WISHLIST)) saveLS(LS_KEYS.WISHLIST, []);
+    if(!loadLS(LS_KEYS.PROFILE)) saveLS(LS_KEYS.PROFILE, null);
+    if(!loadLS(LS_KEYS.LOCALE)) saveLS(LS_KEYS.LOCALE, 'id');
+    if(!loadLS(LS_KEYS.THEME)) saveLS(LS_KEYS.THEME, 'light');
+    if(!loadLS(LS_KEYS.ORDERS)) saveLS(LS_KEYS.ORDERS, []);
+
+    /***********************
+     * Elements & state    *
+     ***********************/
+    const productGrid = document.getElementById('productGrid')
+    const searchInput = document.getElementById('searchInput')
+    const miniSearch = document.getElementById('miniSearch')
+    const categoryFilter = document.getElementById('categoryFilter')
+    const sortSelect = document.getElementById('sortSelect')
+    const cartCount = document.getElementById('cartCount')
+    const wishCount = document.getElementById('wishCount')
+    const cartList = document.getElementById('cartList')
+    const cartTotal = document.getElementById('cartTotal')
+    const cartSidebar = document.getElementById('cartSidebar')
+    const openCartBtn = document.getElementById('openCart')
+    const wishlistBtn = document.getElementById('wishlistBtn')
+    const langToggle = document.getElementById('langToggle')
+    const themeToggle = document.getElementById('themeToggle')
+    const promoText = document.getElementById('promoText')
+
+    // load initial UI settings
+    let locale = loadLS(LS_KEYS.LOCALE) || 'id'
+    let theme = loadLS(LS_KEYS.THEME) || 'light'
+    document.body.setAttribute('data-theme', theme)
+    themeToggle.textContent = theme === 'light' ? '🌞' : '🌙'
+    langToggle.value = locale
+
+    /***********************
+     * Localization strings *
+     ***********************/
+    const STR = {
+      id: {
+        promo: 'Promo: Diskon 15% untuk pembelian pertama — gunakan kode PAKLAMIN15',
+        allCats: 'Semua Kategori',
+        popular: 'Terpopuler',
+        newest: 'Terbaru',
+        priceAsc: 'Termurah',
+        priceDesc: 'Termahal',
+        searchPlaceholder: 'Cari roti, kue, pastry...',
+        checkout: 'Checkout',
+        subtotal: 'Subtotal',
+        clear: 'Bersihkan',
+        profile: 'Profil',
+        register: 'Register',
+        login: 'Login',
+        logout: 'Logout',
+        adminPasswordPrompt: 'Masukkan password admin:',
+        adminAccessDenied: 'Password salah!',
+        orderSuccess: 'Order berhasil! Nomor order:',
+        emptyCart: 'Keranjang kosong',
+        wishlist: 'Wishlist',
+        orders: 'Orders'
+      },
+      en: {
+        promo: 'Promo: 15% off your first order — use code PAKLAMIN15',
+        allCats: 'All Categories',
+        popular: 'Popular',
+        newest: 'Newest',
+        priceAsc: 'Price: Low → High',
+        priceDesc: 'Price: High → Low',
+        searchPlaceholder: 'Search breads, cakes, pastries...',
+        checkout: 'Checkout',
+        subtotal: 'Subtotal',
+        clear: 'Clear',
+        profile: 'Profile',
+        register: 'Register',
+        login: 'Login',
+        logout: 'Logout',
+        adminPasswordPrompt: 'Enter admin password:',
+        adminAccessDenied: 'Wrong password!',
+        orderSuccess: 'Order successful! Order number:',
+        emptyCart: 'Cart is empty',
+        wishlist: 'Wishlist',
+        orders: 'Orders'
+      }
+    };
+
+    function t(k){ return (STR[locale] && STR[locale][k]) ? STR[locale][k] : k }
+
+    /***********************
+     * Render functions    *
+     ***********************/
+    function renderProducts(){
+      const products = loadLS(LS_KEYS.PRODUCTS) || []
+      const q = (searchInput.value || '').toLowerCase()
+      const cat = categoryFilter.value
+      const sort = sortSelect.value
+
+      let list = products.filter(p=>{
+        const matchQ = p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)
+        const matchCat = cat === 'all' ? true : p.category === cat
+        return matchQ && matchCat
+      })
+
+      // sorting
+      if(sort === 'newest') list.sort((a,b)=>b.createdAt - a.createdAt)
+      else if(sort === 'priceAsc') list.sort((a,b)=>a.price - b.price)
+      else if(sort === 'priceDesc') list.sort((a,b)=>b.price - a.price)
+      else list.sort((a,b)=>b.popularity - a.popularity)
+
+      productGrid.innerHTML = ''
+      list.forEach(p=>{
+        const inWishlist = (loadLS(LS_KEYS.WISHLIST) || []).includes(p.id)
+        const el = document.createElement('div')
+        el.className = 'card fade-in'
+        el.innerHTML = `
+          <img src="${p.img}" alt="${escapeHtml(p.title)}" />
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+            <div>
+              <h3>${escapeHtml(p.title)}</h3>
+              <div class="meta small-muted">${escapeHtml(p.category)} • ${timeSince(p.createdAt)}</div>
+            </div>
+            <div class="pill">Rp ${numberWithCommas(p.price)}</div>
+          </div>
+          <p class="small-muted">${escapeHtml(p.desc)}</p>
+          <div class="actions-row">
+            <button class="btn" onclick="viewProduct('${p.id}')">View</button>
+            <button class="btn primary" onclick="addToCart('${p.id}')">Add to Cart</button>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+              <div class="heart ${inWishlist ? 'active' : ''}" onclick="toggleWishlist('${p.id}', this)">${inWishlist ? '♥' : '♡'}</div>
+              <button class="btn" onclick="openAdminEdit('${p.id}')">Edit</button>
+            </div>
+          </div>
+        `
+        productGrid.appendChild(el)
+      })
+    }
+
+    function renderCart(){
+      const cart = loadLS(LS_KEYS.CART) || []
+      cartList.innerHTML = ''
+      if(cart.length === 0){
+        cartList.innerHTML = `<div class="center muted">${t('emptyCart')}</div>`
+        cartCount.textContent = ''
+        cartTotal.textContent = '0'
+        return
+      }
+      let total = 0
+      cart.forEach((it,idx)=>{
+        total += it.price * (it.qty||1)
+        const prod = getProduct(it.id) || {}
+        const itemEl = document.createElement('div')
+        itemEl.className = 'cart-item'
+        itemEl.innerHTML = `
+          <img src="${prod.img||''}" alt="${escapeHtml(prod.title||'')}" />
+          <div style="flex:1">
+            <div class="name">${escapeHtml(prod.title||it.name||'Item')}</div>
+            <div class="small">${it.qty || 1} × Rp ${numberWithCommas(it.price)}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <div class="qty-controls">
+              <button class="btn" onclick="changeQty('${it.id}', -1)">-</button>
+              <div style="padding:6px">${it.qty||1}</div>
+              <button class="btn" onclick="changeQty('${it.id}', 1)">+</button>
+            </div>
+            <button class="btn danger" onclick="removeCartItem('${it.id}')">Remove</button>
+          </div>
+        `
+        cartList.appendChild(itemEl)
+      })
+      cartCount.textContent = cart.reduce((s,i)=>s + (i.qty||1),0)
+      cartTotal.textContent = numberWithCommas(total)
+    }
+
+    function renderWishlistCount(){
+      const wish = loadLS(LS_KEYS.WISHLIST) || []
+      wishCount.textContent = wish.length ? wish.length : ''
+    }
+
+    function renderProfileUI(){
+      // show user info in profile modal
+      const profile = loadLS(LS_KEYS.PROFILE)
+      const container = document.getElementById('profileContent')
+      const lang = locale
+      container.innerHTML = ''
+      if(!profile){
+        container.innerHTML = `
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div><strong>${t('register')}</strong></div>
+            <input id="regName" placeholder="Nama lengkap" />
+            <input id="regEmail" placeholder="Email" type="text"/>
+            <input id="regPwd" placeholder="Password" type="password"/>
+            <div style="display:flex;gap:8px">
+              <button class="btn primary" onclick="register()">Register</button>
+              <button class="btn" onclick="showLogin()">${t('login')}</button>
+            </div>
+          </div>
+        `
+      } else {
+        container.innerHTML = `
+          <div style="display:flex;gap:12px;align-items:center">
+            <img src="${profile.avatar||avatarPlaceholder(profile.name)}" class="avatar" />
+            <div style="flex:1">
+              <div style="font-weight:700">${escapeHtml(profile.name||'User')}</div>
+              <div class="small-muted">${escapeHtml(profile.email||'')}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button class="btn" onclick="logout()">Logout</button>
+              <button class="btn" onclick="showEditProfile()">Edit</button>
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="small-muted">Orders</div>
+            <div id="orderList" style="margin-top:8px"></div>
+          </div>
+        `
+        renderOrders()
+      }
+    }
+
+    function renderOrders(){
+      const orders = loadLS(LS_KEYS.ORDERS) || []
+      const profile = loadLS(LS_KEYS.PROFILE)
+      const container = document.getElementById('orderList')
+      if(!container) return
+      container.innerHTML = ''
+      const myOrders = orders.filter(o => profile && o.email === profile.email)
+      if(myOrders.length === 0){
+        container.innerHTML = `<div class="small-muted">No orders yet</div>`
+        return
+      }
+      myOrders.forEach(o=>{
+        const el = document.createElement('div')
+        el.style.padding = '8px'
+        el.style.border = '1px solid rgba(0,0,0,0.04)'
+        el.style.borderRadius = '8px'
+        el.style.marginBottom = '8px'
+        el.innerHTML = `<div style="display:flex;justify-content:space-between"><div><strong>Order #${o.id}</strong></div><div class="small-muted">${new Date(o.date).toLocaleString()}</div></div>
+          <div class="small-muted">Total: Rp ${numberWithCommas(o.total)}</div>`
+        container.appendChild(el)
+      })
+    }
+
+    /***********************
+     * Actions / utilities *
+     ***********************/
+    function getProduct(id){
+      const prods = loadLS(LS_KEYS.PRODUCTS) || []
+      return prods.find(p=>p.id===id)
+    }
+
+    function addToCart(productId){
+      const prod = getProduct(productId)
+      if(!prod) return alert('Product not found')
+      let cart = loadLS(LS_KEYS.CART) || []
+      const idx = cart.findIndex(i=>i.id===productId)
+      if(idx >= 0){
+        cart[idx].qty = (cart[idx].qty||1) + 1
+      } else {
+        cart.push({id:productId, price: prod.price, qty:1})
+      }
+      saveLS(LS_KEYS.CART, cart)
+      openCart()
+      renderCart()
+    }
+
+    function changeQty(productId, delta){
+      let cart = loadLS(LS_KEYS.CART) || []
+      const idx = cart.findIndex(i=>i.id===productId)
+      if(idx < 0) return
+      cart[idx].qty = (cart[idx].qty||1) + delta
+      if(cart[idx].qty <= 0) cart.splice(idx,1)
+      saveLS(LS_KEYS.CART, cart)
+      renderCart()
+    }
+
+    function removeCartItem(productId){
+      let cart = loadLS(LS_KEYS.CART) || []
+      cart = cart.filter(i => i.id !== productId)
+      saveLS(LS_KEYS.CART, cart)
+      renderCart()
+    }
+
+    function clearCart(){
+      if(!confirm('Clear cart?')) return
+      saveLS(LS_KEYS.CART, [])
+      renderCart()
+      closeCart()
+    }
+
+    function openCart(){
+      cartSidebar.classList.add('open')
+      cartSidebar.setAttribute('aria-hidden','false')
+      renderCart()
+    }
+    function closeCart(){
+      cartSidebar.classList.remove('open')
+      cartSidebar.setAttribute('aria-hidden','true')
+    }
+
+    function toggleWishlist(productId, el){
+      let wish = loadLS(LS_KEYS.WISHLIST) || []
+      if(wish.includes(productId)){
+        wish = wish.filter(id=>id!==productId)
+        if(el) el.classList.remove('active')
+      } else {
+        wish.push(productId)
+        if(el) el.classList.add('active')
+      }
+      saveLS(LS_KEYS.WISHLIST, wish)
+      renderWishlistCount()
+    }
+
+    function viewProduct(id){
+      const p = getProduct(id)
+      if(!p) return
+      const modal = document.getElementById('profileModal')
+      document.getElementById('profileTitle').innerText = p.title
+      const container = document.getElementById('profileContent')
+      container.innerHTML = `
+        <div style="display:flex;gap:12px">
+          <img src="${p.img}" style="width:200px;border-radius:12px" />
+          <div style="flex:1">
+            <h3>${escapeHtml(p.title)}</h3>
+            <div class="small-muted">${escapeHtml(p.category)} • Rp ${numberWithCommas(p.price)}</div>
+            <p style="margin-top:8px">${escapeHtml(p.desc)}</p>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="btn primary" onclick="addToCart('${p.id}'); closeAllModals()">Add to Cart</button>
+              <button class="btn" onclick="toggleWishlist('${p.id}'); closeAllModals()">${t('wishlist')}</button>
+            </div>
+          </div>
+        </div>
+      `
+      openModal('profileModal')
+    }
+
+    /* Profile/Register/Login */
+    function openProfile(){
+      renderProfileUI()
+      openModal('profileModal')
+    }
+
+    function register(){
+      const name = document.getElementById('regName').value.trim()
+      const email = document.getElementById('regEmail').value.trim()
+      const pwd = document.getElementById('regPwd').value
+      if(!name || !email || !pwd) return alert('Isi semua form')
+      const profile = {name,email,password:pwd,avatar:avatarPlaceholder(name)}
+      saveLS(LS_KEYS.PROFILE, profile)
+      alert('Registered! Logged in.')
+      renderProfileUI()
+    }
+
+    function showLogin(){
+      const container = document.getElementById('profileContent')
+      container.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div><strong>${t('login')}</strong></div>
+          <input id="loginEmail" placeholder="Email" />
+          <input id="loginPwd" placeholder="Password" type="password"/>
+          <div style="display:flex;gap:8px">
+            <button class="btn primary" onclick="login()">Login</button>
+            <button class="btn" onclick="renderProfileUI()">Back</button>
+          </div>
+        </div>
+      `
+    }
+
+    function login(){
+      const email = document.getElementById('loginEmail').value.trim()
+      const pwd = document.getElementById('loginPwd').value
+      const profile = loadLS(LS_KEYS.PROFILE)
+      if(!profile) return alert('No account registered. Please register first.')
+      if(profile.email === email && profile.password === pwd){
+        alert('Login success')
+        renderProfileUI()
+      } else {
+        alert('Wrong credentials')
+      }
+    }
+
+    function logout(){
+      if(confirm('Logout?')) {
+        saveLS(LS_KEYS.PROFILE, null)
+        renderProfileUI()
+      }
+    }
+
+    function showEditProfile(){
+      const profile = loadLS(LS_KEYS.PROFILE) || {}
+      const container = document.getElementById('profileContent')
+      container.innerHTML = `
+        <div style="display:flex;gap:12px;align-items:center">
+          <img src="${profile.avatar||avatarPlaceholder(profile.name)}" class="avatar" />
+          <div style="flex:1">
+            <div class="form-row"><label>Name</label><input id="editName" value="${escapeHtml(profile.name||'')}" /></div>
+            <div class="form-row"><label>Email</label><input id="editEmail" value="${escapeHtml(profile.email||'')}" /></div>
+            <div class="form-row"><label>Avatar URL (optional)</label><input id="editAvatar" value="${escapeHtml(profile.avatar||'')}" /></div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn primary" onclick="saveProfile()">Save</button>
+              <button class="btn" onclick="renderProfileUI()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `
+    }
+
+    function saveProfile(){
+      const name = document.getElementById('editName').value.trim()
+      const email = document.getElementById('editEmail').value.trim()
+      const avatar = document.getElementById('editAvatar').value.trim() || avatarPlaceholder(name)
+      if(!name || !email) return alert('Name & email required')
+      const profile = {name,email,avatar}
+      saveLS(LS_KEYS.PROFILE, profile)
+      alert('Profile saved')
+      renderProfileUI()
+    }
+
+    /* checkout */
+    function openCheckout(){
+      const modal = document.getElementById('checkoutModal')
+      const container = document.getElementById('checkoutContent')
+      const cart = loadLS(LS_KEYS.CART) || []
+      if(cart.length === 0) return alert(t('emptyCart'))
+      const profile = loadLS(LS_KEYS.PROFILE) || {}
+      container.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label>Nama</label>
+          <input id="orderName" value="${escapeHtml(profile.name||'')}" />
+          <label>Email</label>
+          <input id="orderEmail" value="${escapeHtml(profile.email||'')}" />
+          <label>Alamat</label>
+          <textarea id="orderAddr" placeholder="Alamat pengiriman..."></textarea>
+          <label>Payment method</label>
+          <select id="orderPay">
+            <option value="cod">Cash on Delivery</option>
+            <option value="bank">Bank Transfer (dummy)</option>
+          </select>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn primary" onclick="placeOrder()">Place Order</button>
+            <button class="btn" onclick="closeAllModals()">Cancel</button>
+          </div>
+        </div>
+      `
+      openModal('checkoutModal')
+    }
+
+    function placeOrder(){
+      const name = document.getElementById('orderName').value.trim()
+      const email = document.getElementById('orderEmail').value.trim()
+      const addr = document.getElementById('orderAddr').value.trim()
+      const pay = document.getElementById('orderPay').value
+      if(!name || !email || !addr) return alert('Please fill required fields')
+      const cart = loadLS(LS_KEYS.CART) || []
+      const total = cart.reduce((s,i)=>s + i.price * (i.qty||1),0)
+      const orders = loadLS(LS_KEYS.ORDERS) || []
+      const orderId = 'ORD' + Math.random().toString(36).slice(2,8).toUpperCase()
+      orders.push({id:orderId, name, email, addr, pay, items:cart, total, date:Date.now()})
+      saveLS(LS_KEYS.ORDERS, orders)
+      saveLS(LS_KEYS.CART, [])
+      alert(`${t('orderSuccess')} ${orderId}`)
+      closeAllModals()
+      renderCart()
+      renderProfileUI()
+    }
+
+    /* admin */
+    let adminUnlocked = false
+    function openAdmin(){
+      if(!adminUnlocked){
+        const pwd = prompt(t('adminPasswordPrompt'))
+        if(pwd === 'admin123'){
+          adminUnlocked = true
+        } else {
+          return alert(t('adminAccessDenied'))
+        }
+      }
+      buildAdminUI()
+      openModal('adminModal')
+    }
+
+    function buildAdminUI(){
+      const content = document.getElementById('adminContent')
+      const products = loadLS(LS_KEYS.PRODUCTS) || []
+      content.innerHTML = `
+        <div class="admin-panel">
+          <div class="admin-top">
+            <button class="btn primary" onclick="showAddProduct()">Add Product</button>
+            <div class="small-muted">Total products: ${products.length}</div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+            ${products.map(p=>`
+              <div style="width:220px" class="card">
+                <img src="${p.img}" style="height:120px" />
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><strong>${escapeHtml(p.title)}</strong><div class="small-muted">Rp ${numberWithCommas(p.price)}</div></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <button class="btn" onclick="openAdminEdit('${p.id}')">Edit</button>
+                  <button class="btn danger" onclick="deleteProduct('${p.id}')">Delete</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `
+    }
+
+    function showAddProduct(){
+      const adminContent = document.getElementById('adminContent')
+      adminContent.innerHTML = `
+        <div style="display:flex;gap:12px;flex-direction:column">
+          <div><strong>Add new product</strong></div>
+          <div class="grid2">
+            <div>
+              <div class="form-row"><label>Title</label><input id="adm_title" /></div>
+              <div class="form-row"><label>Category</label><select id="adm_cat"><option value="bread">bread</option><option value="cake">cake</option><option value="pastry">pastry</option><option value="cookie">cookie</option></select></div>
+              <div class="form-row"><label>Price (IDR)</label><input id="adm_price" type="number" /></div>
+              <div class="form-row"><label>Image URL</label><input id="adm_img" /></div>
+            </div>
+            <div>
+              <div class="form-row"><label>Description</label><textarea id="adm_desc"></textarea></div>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button class="btn primary" onclick="addProduct()">Add Product</button>
+                <button class="btn" onclick="buildAdminUI()">Back</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    }
+
+    function addProduct(){
+      const title = document.getElementById('adm_title').value.trim()
+      const cat = document.getElementById('adm_cat').value
+      const price = parseInt(document.getElementById('adm_price').value,10) || 0
+      const img = document.getElementById('adm_img').value.trim() || 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+      const desc = document.getElementById('adm_desc').value.trim()
+      if(!title || !price) return alert('Title & price required')
+      const prods = loadLS(LS_KEYS.PRODUCTS) || []
+      const newP = {id:genId(), title, category:cat, price, img, desc, createdAt:Date.now(), popularity:0}
+      prods.push(newP)
+      saveLS(LS_KEYS.PRODUCTS, prods)
+      alert('Product added')
+      buildAdminUI()
+      renderProducts()
+    }
+
+    function openAdminEdit(id){
+      if(!adminUnlocked) return openAdmin()
+      const p = getProduct(id)
+      if(!p) return
+      const adminContent = document.getElementById('adminContent')
+      adminContent.innerHTML = `
+        <div style="display:flex;gap:12px;flex-direction:column">
+          <div><strong>Edit product</strong></div>
+          <div class="grid2">
+            <div>
+              <div class="form-row"><label>Title</label><input id="adm_title" value="${escapeHtml(p.title)}" /></div>
+              <div class="form-row"><label>Category</label><select id="adm_cat">
+                <option value="bread" ${p.category==='bread'?'selected':''}>bread</option>
+                <option value="cake" ${p.category==='cake'?'selected':''}>cake</option>
+                <option value="pastry" ${p.category==='pastry'?'selected':''}>pastry</option>
+                <option value="cookie" ${p.category==='cookie'?'selected':''}>cookie</option>
+              </select></div>
+              <div class="form-row"><label>Price (IDR)</label><input id="adm_price" type="number" value="${p.price}" /></div>
+              <div class="form-row"><label>Image URL</label><input id="adm_img" value="${escapeHtml(p.img)}" /></div>
+            </div>
+            <div>
+              <div class="form-row"><label>Description</label><textarea id="adm_desc">${escapeHtml(p.desc)}</textarea></div>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button class="btn primary" onclick="saveProductEdits('${p.id}')">Save</button>
+                <button class="btn danger" onclick="deleteProduct('${p.id}')">Delete</button>
+                <button class="btn" onclick="buildAdminUI()">Back</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    }
+
+    function saveProductEdits(id){
+      const title = document.getElementById('adm_title').value.trim()
+      const cat = document.getElementById('adm_cat').value
+      const price = parseInt(document.getElementById('adm_price').value,10) || 0
+      const img = document.getElementById('adm_img').value.trim()
+      const desc = document.getElementById('adm_desc').value.trim()
+      if(!title || !price) return alert('Title & price required')
+      let prods = loadLS(LS_KEYS.PRODUCTS) || []
+      prods = prods.map(p => p.id === id ? {...p, title, category:cat, price, img, desc} : p)
+      saveLS(LS_KEYS.PRODUCTS, prods)
+      alert('Saved')
+      buildAdminUI()
+      renderProducts()
+    }
+
+    function deleteProduct(id){
+      if(!confirm('Delete product?')) return
+      let prods = loadLS(LS_KEYS.PRODUCTS) || []
+      prods = prods.filter(p=>p.id!==id)
+      saveLS(LS_KEYS.PRODUCTS, prods)
+      buildAdminUI()
+      renderProducts()
+    }
+
+    /* modals open/close */
+    function openModal(id){
+      document.getElementById('modalBackdrop').style.display = 'flex'
+      const modals = ['profileModal','checkoutModal','adminModal']
+      modals.forEach(m=>{
+        const el = document.getElementById(m)
+        if(el) el.style.display = (m===id) ? 'block' : 'none'
+      })
+    }
+    function closeAllModals(){ document.getElementById('modalBackdrop').style.display = 'none' }
+    function closeModal(e){
+      if(e.target.id === 'modalBackdrop') closeAllModals()
+    }
+
+    /* admin open shortcut */
+    function openAdminEditFromList(id){
+      openAdmin()
+      openAdminEdit(id)
+    }
+
+    /* misc */
+    function numberWithCommas(x){ return (x||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }
+    function escapeHtml(str){ if(!str) return ''; return String(str).replace(/[&<>"'`]/g, s=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;' })[s]) }
+    function timeSince(ts){ const s=(Date.now()-ts)/1000; if(s<60) return Math.floor(s)+'s ago'; if(s<3600) return Math.floor(s/60)+'m ago'; if(s<86400) return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago' }
+    function avatarPlaceholder(name){ const initials = (name||'User').split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase(); return `https://via.placeholder.com/128/9be6c5/0a2b18?text=${initials}` }
+
+    /* wishlist view */
+    wishlistBtn.addEventListener('click', ()=>{
+      const wish = loadLS(LS_KEYS.WISHLIST) || []
+      if(wish.length === 0) return alert('Wishlist kosong')
+      const titles = (loadLS(LS_KEYS.PRODUCTS)||[]).filter(p=>wish.includes(p.id)).map(p=>p.title).join('\n- ')
+      alert('Wishlist:\\n- ' + titles)
+    })
+
+    /* view product quick scroll */
+    function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}) }
+    function scrollToSection(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}) }
+
+    /* change qty helper by product id */
+    function changeQty(productId, delta){
+      let cart = loadLS(LS_KEYS.CART) || []
+      const idx = cart.findIndex(i=>i.id===productId)
+      if(idx < 0) return
+      cart[idx].qty = (cart[idx].qty||1) + delta
+      if(cart[idx].qty <= 0) cart.splice(idx,1)
+      saveLS(LS_KEYS.CART, cart)
+      renderCart()
+    }
+
+    /* remove cart by id */
+    function removeCartItem(productId){
+      let cart = loadLS(LS_KEYS.CART) || []
+      cart = cart.filter(i => i.id !== productId)
+      saveLS(LS_KEYS.CART, cart)
+      renderCart()
+    }
+
+    /* profile modal helpers already covered */
+
+    /* admin edit open wrapper */
+    window.openAdminEdit = openAdminEdit
+
+    /* event listeners */
+    searchInput.addEventListener('input', ()=>renderProducts())
+    miniSearch.addEventListener('input', ()=>{ searchInput.value = miniSearch.value; renderProducts() })
+    categoryFilter.addEventListener('change', ()=>renderProducts())
+    sortSelect.addEventListener('change', ()=>renderProducts())
+    openCartBtn.addEventListener('click', openCart)
+    wishlistBtn.addEventListener('click', ()=>{ /* show wishlist */ const wish = loadLS(LS_KEYS.WISHLIST)||[]; if(wish.length===0) alert('Wishlist kosong'); else alert('Wishlist:\\n- '+ (loadLS(LS_KEYS.PRODUCTS)||[]).filter(p=>wish.includes(p.id)).map(p=>p.title).join('\\n- ')) })
+
+    /* language & theme toggles */
+    langToggle.addEventListener('change', (e)=>{
+      locale = e.target.value
+      saveLS(LS_KEYS.LOCALE, locale)
+      promoText.innerHTML = t('promo')
+      // update placeholders & text (some)
+      searchInput.placeholder = t('searchPlaceholder')
+      renderProducts()
+    })
+
+    themeToggle.addEventListener('click', ()=>{
+      theme = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light'
+      document.body.setAttribute('data-theme', theme)
+      themeToggle.textContent = theme === 'light' ? '🌞' : '🌙'
+      saveLS(LS_KEYS.THEME, theme)
+    })
+
+    /* simple view product from admin */
+    window.viewProduct = viewProduct
+
+    /* utilities for cart from other places */
+    window.addToCart = addToCart
+    window.toggleWishlist = toggleWishlist
+    window.removeCartItem = removeCartItem
+
+    /* initial renders */
+    function bootstrap(){
+      promoText.innerHTML = t('promo')
+      searchInput.placeholder = t('searchPlaceholder')
+      renderProducts()
+      renderCart()
+      renderWishlistCount()
+      renderProfileUI()
+    }
+    bootstrap()
+
+    /***********************
+     * Extra niceties: keep UI updated when storage changes in other tabs
+     ***********************/
+    window.addEventListener('storage', (e)=>{
+      if([LS_KEYS.PRODUCTS,LS_KEYS.CART,LS_KEYS.WISHLIST].includes(e.key)){
+        renderProducts()
+        renderCart()
+        renderWishlistCount()
+      }
+    })
+
+    // Small security: clear adminUnlocked on page reload
+    window.addEventListener('beforeunload', ()=>{ adminUnlocked = false })
+
+    // Accessibility: keyboard Esc closes modals & cart
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        closeAllModals()
+        closeCart()
+      }
+    })
+  </script>
+</body>
+</html>
